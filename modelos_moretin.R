@@ -119,3 +119,36 @@ taxaretorno <- sum(logret)
 taxaretorno <- log(Banespa.ts[1499])-log(Banespa.ts[1])
 retorno <- taxaretorno*10000
 
+# Capitulo 3
+require(xlsx)
+Energ <- read.xlsx("ENERGIA.xls",sheetName="Plan1")
+
+Energ.ts <- ts(Energ[,3], start=c(1968,1), end=c(1979,9),frequency=12)
+plot(Energ.ts)
+
+require(stats)
+Energ1 <- window(Energ.ts, start=c(1977,1), end=c(1978,12))
+Energ2 <- Energ1/1000
+
+t <- seq(1:24)
+
+tendencia <- lm(Energ2 ~ t)
+summary(tendencia)
+plot(Energ2)
+
+abline(tendencia)
+
+require(forecast)
+nd <- seq(25,28)
+fcast <- forecast(tendencia, h=4, level=c(80,95), newdata=nd)
+#predict(tendencia)
+plot(fcast)
+
+
+#Resultados obtidos com o livro
+teste <- function(x){
+  z <- 68.438+4.242*x
+  z
+}
+
+teste(nd)
