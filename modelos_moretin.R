@@ -152,3 +152,44 @@ teste <- function(x){
 }
 
 teste(nd)
+
+
+#Cap. 4
+
+# Aplicação Suavização Exponencial Simples
+setwd("C:\\Users\\Euler\\Documents\\GitHub\\time series\\dados_moretin")
+poluicao <- read.xlsx("poluicao.xls",sheetName="Plan1")
+
+head(poluicao)
+tail(poluicao)
+no2 <- ts(poluicao[,7],start=1997, frequency=365)
+plot(no2)
+
+# Previsão para o 121º valor
+no2abril <- window(no2,start=c(1997,1),end=c(1997,120))
+
+plot(no2abril)
+
+no2adjust <-HoltWinters(no2abril, alpha=0.5502,beta=FALSE, gamma=FALSE) 
+#require(forecast)
+no2forecast <-forecast.HoltWinters(no2adjust, alpha=0.5502, h=10) 
+
+plot(no2adjust)
+plot.forecast(no2forecast)
+
+# Previsão para o 122º valor
+no2abril <- window(no2,start=c(1997,1),end=c(1997,121))
+no2adjust <-HoltWinters(no2abril, alpha=0.5502,beta=FALSE, gamma=FALSE) 
+no2forecast <-forecast.HoltWinters(no2adjust, alpha=0.5502, h=1) 
+
+# Previsao para o 111º valor
+no2abril <- window(no2,start=c(1997,1),end=c(1997,110))
+no2adjust <-HoltWinters(no2abril, alpha=0.5502,beta=FALSE, gamma=FALSE) 
+no2forecast <-forecast.HoltWinters(no2adjust, alpha=0.5502, h=1) 
+
+tail(no2abril)
+
+
+
+
+
