@@ -4,7 +4,9 @@
 # If you have a time series that can be described using an additive model with constant level and no 
 # seasonaility, you can use simple exponential smoothing to make short-term forecast.
 
-rain<-scan("http://library.quantlego.com/Howto/R/precip1.dat", skip=1)
+#rain<-scan("http://library.quantlego.com/Howto/R/precip1.dat", skip=1) #anterior
+site <- "http://robjhyndman.com/tsdldata/hurst/precip1.dat"
+rain<-scan(site, skip=1)
 rainseries<-ts(rain,start=c(1813))
 plot(rainseries)
 
@@ -16,14 +18,14 @@ plot(rainseries)
 # To use R's HoltWinters() function for simple exponential smoothing, we need to set the parameters beta=FALSE 
 # and gamma=FALSE.
 
-rainseriesforecasts<-HoltWinters(rainseries, beta=FALSE, gamma=FALSE) #Estimação dos parametros do modelo
+rainseriesforecasts<-HoltWinters(rainseries, beta=FALSE, gamma=FALSE) #EstimaÃ§Ã£o dos parametros do modelo
 rainseriesforecasts
 
 rainseriesforecasts$fitted
 
 plot(rainseriesforecasts)
 
-rainseriesforecasts$SSE #Medida de acurácia
+rainseriesforecasts$SSE #Medida de acurÃ¡cia
 
 layout(1:4)
 plot(HoltWinters(rainseries, alpha=0.25, beta=FALSE, gamma=FALSE), main="Alpha=0.25")
@@ -31,11 +33,11 @@ plot(HoltWinters(rainseries, alpha=0.5, beta=FALSE, gamma=FALSE), main="Alpha=0.
 plot(HoltWinters(rainseries, alpha=0.75, beta=FALSE, gamma=FALSE), main="Alpha=0.75")
 plot(HoltWinters(rainseries, alpha=1, beta=FALSE, gamma=FALSE), main="Alpha=1")
 
-plot(HoltWinters(rainseries, beta=FALSE, gamma=FALSE, l.start=35)) # neste caso dizemos que a série estimada deve começar em 35
+plot(HoltWinters(rainseries, beta=FALSE, gamma=FALSE, l.start=35)) # neste caso dizemos que a sÃ©rie estimada deve comeÃ§ar em 35
 
 #install.packages("forecast")
 require(forecast)
-rainseriesforecasts2<-forecast.HoltWinters(rainseriesforecasts, h=8) # Previsão para os próximos 8 anos
+rainseriesforecasts2<-forecast.HoltWinters(rainseriesforecasts, h=8) # PrevisÃ£o para os prÃ³ximos 8 anos
 rainseriesforecasts2
 mean(rainseries)
 plot.forecast(rainseriesforecasts2)
@@ -120,7 +122,7 @@ skirts.ts.forecasts
 
 plot(skirts.ts.forecasts)
 
-skirts.ts.forecast2 <- forecast.HoltWinters(skirts.ts.forecasts, h=19)  # Previsão para 19 anos
+skirts.ts.forecast2 <- forecast.HoltWinters(skirts.ts.forecasts, h=19)  # PrevisÃ£o para 19 anos
 skirts.ts.forecast2
 
 plot(skirts.ts.forecast2)
